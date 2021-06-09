@@ -12,9 +12,12 @@ run unzip data.zip
 # User needs to download vocab from https://athena.ohdsi.org/vocabulary/list
 add vocab.zip vocab.zip
 run unzip vocab.zip
-add write_loader.sh ./
 run apk add openjdk8~=8.275   # for getting CPT data from UMLS
 ARG UMLS_API_KEY
-run docker-entrypoint.sh --version && su postgres -c 'pg_ctl start && bash write_loader.sh '${UMLS_API_KEY}' | psql -v ON_ERROR_STOP=1 -U '${POSTGRES_USER}' '${POSTGRES_DB}' && pg_ctl stop'
+add bash cpt.sh ${UMLS_API_KEY}
+add write_vocab_loader.sh ./
+run docker-entrypoint.sh --version && su postgres -c 'pg_ctl start && bash write_vocab_loader.sh '${UMLS_API_KEY}' | psql -v ON_ERROR_STOP=1 -U '${POSTGRES_USER}' '${POSTGRES_DB}' && pg_ctl stop'
+add write_data_loader.sh ./
+run docker-entrypoint.sh --version && su postgres -c 'pg_ctl start && bash write_data_loader.sh '${UMLS_API_KEY}' | psql -v ON_ERROR_STOP=1 -U '${POSTGRES_USER}' '${POSTGRES_DB}' && pg_ctl stop'
 workdir /
 run rm -rf /tmp/loading
