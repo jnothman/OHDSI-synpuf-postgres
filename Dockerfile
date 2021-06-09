@@ -16,7 +16,7 @@ run apk add openjdk8~=8.275   # for getting CPT data from UMLS
 ARG UMLS_API_KEY
 run bash cpt.sh ${UMLS_API_KEY}
 add write_vocab_loader.sh ./
-add run_in_postgres.sh
+add run_in_postgres.sh ./
 run ./run_in_postgres.sh write_vocab_loader.sh
 add write_data_loader.sh ./
 run ./run_in_postgres.sh write_data_loader.sh
