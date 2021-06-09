@@ -14,7 +14,7 @@ add vocab.zip vocab.zip
 run unzip vocab.zip
 run apk add openjdk8~=8.275   # for getting CPT data from UMLS
 ARG UMLS_API_KEY
-add bash cpt.sh ${UMLS_API_KEY}
+run bash cpt.sh ${UMLS_API_KEY}
 add write_vocab_loader.sh ./
 run ./run_in_postgres.sh write_vocab_loader.sh
 add write_data_loader.sh ./
