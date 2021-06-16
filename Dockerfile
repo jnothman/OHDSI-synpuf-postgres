@@ -17,6 +17,8 @@ ARG UMLS_API_KEY
 run bash cpt.sh ${UMLS_API_KEY}
 add write_vocab_loader.sh ./
 add run_in_postgres.sh ./
+# using the default PGDATA results in the data being deleted between layers
+ENV PGDATA=/pgdata
 run ./run_in_postgres.sh write_vocab_loader.sh
 add write_data_loader.sh ./
 run ./run_in_postgres.sh write_data_loader.sh
